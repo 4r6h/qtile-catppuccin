@@ -19,7 +19,7 @@ mod = "mod4"
 #terminal = "gnome-terminal"
 terminal = "alacritty"
 browser = "brave"
-file_manager = "nemo"
+file_manager = "pcmanfm"
 
 from qtile_extras.popup.toolkit import (
     PopupRelativeLayout,
