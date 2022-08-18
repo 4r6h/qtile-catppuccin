@@ -1,22 +1,27 @@
 #!/bin/bash
 
-# Author : Ruturajn <nanotiruturaj@gmail.com>
-# Copyright (c) 2022, Ruturaj A. Nanoti, All Rights Reserved
+# ***************************************
+# * Author: 4r6h/Rahat                  *
+# * github: https://www.github.com/4r6h *
+# * forked: Ruturajn/Dotfiles           *
+# ***************************************
+# Copyright (c) 2022, Ruturaj A. Nanoti, Modified by 4r6h/Rahat All Rights Reserved
 # Run this script for setting up the Rice.
 
-echo -ne "
-██████╗ ██╗   ██╗████████╗██╗   ██╗██████╗  █████╗      ██╗███╗   ██╗
-██╔══██╗██║   ██║╚══██╔══╝██║   ██║██╔══██╗██╔══██╗     ██║████╗  ██║
-██████╔╝██║   ██║   ██║   ██║   ██║██████╔╝███████║     ██║██╔██╗ ██║
-██╔══██╗██║   ██║   ██║   ██║   ██║██╔══██╗██╔══██║██   ██║██║╚██╗██║
-██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║  ██║██║  ██║╚█████╔╝██║ ╚████║
-╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═══╝
-=====================================================================
+echo -ne '''
 
-                Arch-Linux Qtile Setup Script                       
+ 888888ba            dP                  dP   
+ 88     8b           88                  88   
+ a88aaaa8P .d8888b.  88d888b. .d8888b. d8888P 
+ 88    8b  88    88  88    88 88    88   88   
+ 88     88 88.  .88  88    88 88.  .88   88   
+ dP      dP 88888P8  dP    dP  88888P8   dP   
+================================================
 
-=====================================================================
-"
+        Arch-Linux Qtile Setup Script                       
+
+================================================
+'''
 
 BRed="\e[1;31m"
 BGreen="\e[1;32m"
@@ -38,7 +43,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "${BYellow}[ * ]Backing up current config folder and files in backup_dot_config${End_Colour}"
 	if [[ -d "${HOME}"/.config ]]; then
 		mkdir "${HOME}"/backup_dot_config
-		cp -r "${HOME}"/.config/. "${HOME}"/backup_dot_config
+		cp -r "${HOME}"/.config/. "${HOME}"/backup_old_config
 	else
 		mkdir "${HOME}"/.config
 	fi
@@ -60,7 +65,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 	# Install the required packages for the Rice
 	echo -e "${BYellow}[ * ]Installing packages${End_Colour}"
-	sudo pacman -Syyu neofetch htop nitrogen xorg fish rofi dunst dialog \
+	sudo pacman -Syyu --noconfirm --needed neofetch htop nitrogen xorg fish rofi dunst dialog \
 		python-dbus linux-headers base base-devel p7zip unzip tar python-pip \
 		papirus-icon-theme cmatrix pamixer feh alsa-utils pavucontrol alacritty \
 		git vim curl flameshot pulseaudio playerctl scrot ttf-fantasque-sans-mono \
@@ -69,6 +74,8 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		ttf-joypixels python-neovim python2 bat ueberzug ffmpegthumbnailer libjpeg \
 		libpng ncdu tree xsel fd
 
+	while true
+	do
 	# Adding a swapfile
 	read -rp "[1;34m[ * ]Do you want to create a swapfile [Y/n]:[0m" ans
 	if [[ -z ${ans} || ${ans} == "y" || ${ans} == "Y" ]]; then
@@ -79,93 +86,87 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		sudo swapon /swapfile
 		echo "/swapfile                                       none            swap            defaults        0 0" | sudo tee -a /etc/fstab
 		echo -e "${BGreen}Swapfile creation and configuration successfull !!${End_Colour}"
+		break
 	elif [[ ${ans} == "n" || ${ans} == "N" ]]; then
 		echo -e "${BRed}Skipping Swapfile creation${End_Colour}"
+		break
 	else
-		echo -e "${BRed}Not a valid option, Skipping Swapfile creation${End_Colour}"
+		echo -e "${BRed}Not a valid option, please select an option.${End_Colour}"
 	fi
+	done
 
 	# Install stuff with pip
 	# echo -e "${BYellow}[ * ]Installing fontawesome and dbus-next for icons and notifications${End_Colour}"
 	echo -e "${BYellow}[ * ]Installing fontawesome${End_Colour}"
+	sudo pacman -S --noconfirm --needed python-pip
 	sudo pip3 install fontawesome
 
-	# Install `yay` as the AUR Helper, interact wherever required
-	read -rp "[1;34m[ * ]Do you want to install yay as the AUR Helper? [Y/n]:[0m" aur_ans
+	# Install `paru` as the AUR Helper, interact wherever required
+	aur_name="paru"
+	if [[ ! -x /usr/bin/${aur_name} || ! -x /bin/${aur_name} ]]; then
+	read -rp "[1;34m[ * ]Do you want to install paru as the AUR Helper? [Y/n]:[0m" aur_ans
 	if [[ ${aur_ans} == "n" || ${aur_ans} == "N" ]]; then
-		read -rp "[1;34m[ * ]Please enter the name of the installed AUR Helper:[0m" aur_name
+		read -rp "[1;34m[ * ]Please enter the name of the already installed AUR Helper:[0m" aur_name
 		if [[ -z ${aur_name} ]]; then
 			echo -e "${BRed}FATAL : Cannot proceed without an AUR Helper !!${End_Colour}" && exit
 		fi
 	elif [[ -z ${aur_ans} || ${aur_ans} == "y" || ${aur_ans} == "Y" ]]; then
-		echo -e "${BYellow}[ * ]Installing yay as the AUR Helper${End_Colour}"
-		sudo git clone https://aur.archlinux.org/yay.git
-		sudo chown -R "${USER}":"${USER}" yay
-		cd ./yay || exit
-		makepkg -si
-		aur_name="yay"
+		echo -e "${BYellow}[ * ]Installing paru as the AUR Helper${End_Colour}"
+		sudo git clone https://aur.archlinux.org/paru.git
+		sudo chown -R "${USER}":"${USER}" paru
+		cd ./paru || exit
+		makepkg -si --noconfirm --needed
+	fi
 	fi
 
-	# Upgrade system with yay
+	# Upgrade system with paru
 	echo -e "${BYellow}[ * ]Updating and Upgrading system with ${aur_name}${End_Colour}"
-	"${aur_name}" -Syu
+	"${aur_name}" -Syu --noconfirm --needed
 
 	# Install lsd for the ls command and qtile-extras from desired AUR Helper
 	echo -e "${BYellow}[ * ]Installing lsd, qtile-git, and qtile-extras with ${aur_name}${End_Colour}"
-	"${aur_name}" -S lsd qtile-git qtile-extras-git
+	"${aur_name}" -S lsd qtile-git qtile-extras-git --noconfirm --needed
 
 	# Install the required fonts
-	echo -e "${BYellow}[ * ]Installing Fantasque Sans Mono Nerd Font and JetBrains Mono Font with ${aur_name}${End_Colour}"
-	"${aur_name}" -S nerd-fonts-fantasque-sans-mono ttf-jetbrains-mono
+	echo -e "${BYellow}[ * ]Installing Nerd Fonts Complete with ${aur_name}${End_Colour}"
+	"${aur_name}" -S nerd-fonts-complete --noconfirm --needed
 
-	# Install pipes,cava, and brave-bin with yay
+	# Install pipes,cava, and brave-bin with paru
 	echo -e "${BYellow}[ * ]Installing pipes.sh, cava, brave-bin and wpgtk with ${aur_name}${End_Colour}"
-	"${aur_name}" -S pipes.sh cava brave-bin wpgtk
+	"${aur_name}" -S pipes.sh cava brave-bin wpgtk --noconfirm --needed
 
-	# Install some other packages with yay
+	# Install some other packages with paru
 	echo -e "${BYellow}[ * ]Installing some other misc. packages with ${aur_name}${End_Colour}"
-	"${aur_name}" -S lf i3lock-color betterlockscreen tty-clock-git cbonsai
+	"${aur_name}" -S lf i3lock-color betterlockscreen tty-clock-git cbonsai --noconfirm --needed
 
-	# Getting pfetch as fetch tool
-	echo -e "${BYellow}[ * ]Installing pfetch as the fetch tool${End_Colour}"
-	mkdir "${HOME}"/Git-Repos
-	cd "${HOME}"/Git-Repos || exit
-	git clone https://github.com/dylanaraps/pfetch.git
-	cd ./pfetch || exit
-	sudo cp ./pfetch /usr/bin/pfetch
-
-	# Clone the Dotfiles Repo and place all the folders in the $(HOME)/.config directory
-	cd "${HOME}"/Git-Repos/ || exit
-	echo -e "${BYellow}[ * ]Cloning the Dotfiles repo${End_Colour}"
-	git clone https://github.com/Ruturajn/Dotfiles.git
-	cd "${HOME}"/Git-Repos/Dotfiles || exit
-
+	# Getting pfetch and neofetch as fetch tool
+	echo -e "${BYellow}[ * ]Installing pfetch and neofetch as the fetch tool${End_Colour}"
+	"${aur_name}" -S pfetch neofetch --noconfirm --needed
+	
+	# Place all the folders in the $(HOME)/.config directory
 	echo -e "${BYellow}[ * ]Placing dunst folder in ~/.config/dunst and making vol_script executable${End_Colour}"
-	cp -r ./dunst "${HOME}"/.config
+	cp -r ../dunst "${HOME}"/.config/
 	sed -i "s|    icon_path = .*|    icon_path = $HOME/.config/dunst/icons|" "${HOME}"/.config/dunst/dunstrc
 
 	echo -e "${BYellow}[ * ]Placing rofi folder in ~/.config/rofi${End_Colour}"
-	cp -r ./rofi "${HOME}"/.config
+	cp -r ../rofi "${HOME}"/.config/
 
 	echo -e "${BYellow}[ * ]Placing cava folder in ~/.config/cava${End_Colour}"
-	cp -r ./cava "${HOME}"/.config
+	cp -r ../cava "${HOME}"/.config/
 
 	echo -e "${BYellow}[ * ]Placing qtile/config.py and qtile/autostart.sh folder in ~/.config/qtile  and making autostart.sh executable${End_Colour}"
-	cp -r ./qtile "${HOME}/.config/"
-	echo "nitrogen --set-scaled ${HOME}/Git-Repos/Dotfiles/Wallpapers/Mountains.jpg --save" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
+	cp -r ../qtile "${HOME}"/.config/
+	sudo mv -u ../qtile-wallpapers /usr/share/backgrounds/
+	echo "nitrogen --set-zoom-fill /usr/share/backgrounds/qtile-wallpapers/China_Town.jpg --save" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
 	echo "~/.config/qtile/Scripts/get_ip.sh &" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
 	chmod +x "${HOME}"/.config/qtile/autostart.sh
 
 	echo -e "${BYellow}[ * ]Placing alacritty config in ~/.config/${End_Colour}"
-	cp -r ./alacritty ~/.config/
+	mkdir -p "${HOME}/.config/alacritty"
+	curl -fsSL "https://raw.githubusercontent.com/4r6h/Dot4iles/main/AlacrittyConfig/alacritty.yml" >"${HOME}"/.config/alacritty/alacritty.yml
+	curl -fsSL "https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin.yml" >"${HOME}"/.config/alacritty/catppuccin.yml
 
-	echo -e "${BYellow}[ * ]Choose your Preferred Editor : "
-	echo -e "1) vim"
-	echo -e "2) neovim"
-	read -rp "[1;34m[ * ]Enter your choice : [0m" editor_ans
-
-	case "${editor_ans}" in
-	1)
+	viminstall() {
 		echo -e "${BYellow}[ * ]Installing Vim${End_Colour}"
 		echo -e "${BYellow}[ * ]Placing .vimrc in ~/${End_Colour}"
 		cp ./.vimrc "${HOME}"/
@@ -182,8 +183,9 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		echo -e "${BYellow}[ * ]Installing vim plugins${End_Colour}"
 		vim +'PlugInstall --sync' +qa
-		;;
-	2)
+	}
+
+	nviminstall() {
 		echo -e "${BYellow}[ * ]Installing Neovim${End_Colour}"
 
 		# Installing Vim-Plug for neovim
@@ -192,14 +194,14 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		# Check if neovim is installed, if it is remove it and install latest
 		echo -e "${BYellow}[ * ]Installing Latest Neovim${End_Colour}"
-		sudo pacman -S neovim
+		sudo pacman -S neovim --noconfirm --needed
 
 		echo -e "${BYellow}[ * ]Placing nvim directory in ~/.config${End_Colour}"
-		cp -r nvim ~/.config/
+		cp -r nvim ~/.config
 
 		# Install nodejs
 		echo -e "${BYellow}[ * ]Installing Latest Nodejs${End_Colour}"
-		sudo pacman -S npm nodejs
+		sudo pacman -S npm nodejs --noconfirm --needed
 
 		# Make a plugged directory in ~/.config/nvim/
 		echo -e "${BYellow}[ * ]Making directory ~/.config/nvim/plugged${End_Colour}"
@@ -219,9 +221,41 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		# rustup component add rust-src
 		# nvim +'LspInstall --sync rust_analyzer' +qa
 
-		sudo pacman -S lua-language-server pyright rust-analyzer
+		sudo pacman -S lua-language-server pyright rust-analyzer --noconfirm --needed
+	}
+
+	bothinstall() {
+		viminstall
+		nviminstall
+	}
+
+	while true
+	do
+	echo -e "${BYellow}[ * ]Choose your Preferred Editor : "
+	echo -e "1) vim"
+	echo -e "2) neovim"
+	echo -e "3) vim & neovim"
+	read -rp "[1;34m[ * ]Enter your choice : [0m" editor_ans
+
+	case "${editor_ans}" in
+	1)
+		viminstall
+		break
 		;;
+
+	2)
+		nviminstall
+		break
+		;;
+	
+	3)
+		bothinstall
+		break
+		;;
+	*)
+		echo -e "${BRed} please select type an option. then press enter${End_Colour}"
 	esac
+	done
 
 	echo -e "${BYellow}[ * ]Making ~/.config/picom${End_Colour}"
 	mkdir -p "${HOME}"/.config/picom
@@ -236,22 +270,21 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	case "${picom_ans}" in
 	1)
 		echo -e "${BYellow}[ * ]Installing picom${End_Colour}"
-		sudo pacman -S picom
+		sudo pacman -S picom --noconfirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
-		cp ./picom/picom.conf "${HOME}"/.config/picom/
+		cp ../picom/picom.conf "${HOME}"/.config/picom/
 		;;
 	2)
 		echo -e "${BYellow}[ * ]Installing picom-jonaburg-git with ${aur_name}${End_Colour}"
-		"${aur_name}" -S picom-jonaburg-git
+		"${aur_name}" -S picom-jonaburg-git --noconfirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
-		#curl -fsSL "https://raw.githubusercontent.com/jonaburg/picom/next/picom.sample.conf" >"${HOME}"/.config/picom/picom.conf
-		cp ./picom/jonaburg_picom.conf "${HOME}"/.config/picom/picom.conf
+		cp ../picom/jonaburg_picom.conf "${HOME}"/.config/picom/picom.conf
 		;;
 	3)
 		echo -e "${BYellow}[ * ]Installing picom-ibhagwan-git with ${aur_name}${End_Colour}"
-		"${aur_name}" -S picom-ibhagwan-git
+		"${aur_name}" -S picom-ibhagwan-git --noconfirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		curl -fsSL "https://raw.githubusercontent.com/ibhagwan/picom/next-rebase/picom.sample.conf" >"${HOME}"/.config/picom/picom.conf
@@ -261,27 +294,21 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "${BYellow}[ * ]Changing the picom executable call in autostart.sh${End_Colour}"
 	if [[ $(systemd-detect-virt) ]]; then
 		sed -i 's|picom.*|picom --no-vsync \&|' "${HOME}"/.config/qtile/autostart.sh
-		sed -i 's/size\: 10/size\: 14/' "${HOME}"/.config/alacritty/alacritty.yml
 	fi
 
-	# Installing material design icon font and JetBrains Mono Nerd Font
+	# Installing material design icon font
 	echo -e "${BYellow}[ * ]Installing Material-Design-Icon Font${End_Colour}"
-	cd "${HOME}"/Git-Repos || exit
-	# wget "https://github.com/google/material-design-icons/raw/master/font/MaterialIcons-Regular.ttf"
-	if [[ ! -d "${HOME}"/.fonts ]]; then
-		mkdir "${HOME}"/.fonts
-	fi
-	# cp ./MaterialIcons-Regular.ttf "${HOME}"/.fonts
-	cp -r "${HOME}"/Git-Repos/Dotfiles/fonts/. "${HOME}"/.fonts/.
+	wget -cqP "${HOME}"/.fonts "https://github.com/4r6h/material-design-icons/raw/master/font/MaterialIcons-Regular.ttf"
+	mv ../Feather.ttf "${HOME}"/.fonts
 	fc-cache -fv
 
 	# echo -e "${BYellow}[ *]Installing JetBrains Mono Nerd Font${End_Colour}"
-	# wget "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf"
-	# cp ./"JetBrains Mono Regular Nerd Font Complete Mono.ttf" "${HOME}"/.fonts
+	# wget -cqP "${HOME}"/.fonts "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf"
 	# fc-cache -fv
 
 	# Install fish and change default shell
-	cd "${HOME}"/Git-Repos/Dotfiles || exit
+	while true
+	do
 	read -rp "[1;34m[ * ]Do you want to change the default shell to fish? [Y/n]:[0m" shell_ans
 	if [[ -z ${shell_ans} || ${shell_ans} == "y" || ${shell_ans} == "Y" ]]; then
 		echo -e "${BYellow}[ * ]Changing Default shell to fish and installing omf with robbyrussell theme${End_Colour}"
@@ -291,20 +318,22 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install >install
 		fish install --path=~/.local/share/omf --config=~/.config/omf --noninteractive
 		fish -c "omf install robbyrussell"
-		cp ./fish/config.fish "${HOME}"/.config/fish/config.fish
+		cp ../fish/config.fish "${HOME}"/.config/fish/config.fish
 		sed -i 's|set -gx fish_user_paths ~/.local/bin/|set -gx fish_user_paths ~/.local/bin/ ~/.local/share/nvim/lsp_servers/python/node_modules/.bin ~/.local/share/nvim/lsp_servers/rust ~/.cargo/bin ~/.local/share/nvim/lsp_servers/sumneko_lua/extension/server/bin|g' "${HOME}"/.config/fish/config.fish
 		rm install
+		break
 	elif [[ ${shell_ans} == "n" || ${shell_ans} == "N" ]]; then
 		echo -e "${BRed}Skipping Shell change${End_Colour}"
+		break
 	else
-		echo -e "${BRed}Not a valid option, Skipping Shell change${End_Colour}"
+		echo -e "${BRed}Not a valid option, please type [Y/n] then press enter.${End_Colour}"
 	fi
-
+	done
 	echo -e "[ * ]Placing lf in ~/.config${End_Colour}"
-	cp -r ./lf "${HOME}"/.config/
+	cp -r ../lf "${HOME}"/.config/
 
 	echo -e "[ * ]Placing betterlockscreen config file in ~/.config${End_Colour}"
-	cp ./betterlockscreenrc "${HOME}"/.config/
+	cp ../betterlockscreenrc "${HOME}"/.config/
 
 	# # Enable lightdm service with the following steps
 	# read -rp "[1;34m[ * ]Do you want to install the lightdm login manager?[Y/n]:[0m" lightdm_ans
@@ -323,22 +352,32 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	# fi
 
 	# Install and Enable sddm service with the following steps
-	read -rp "[1;34m[ * ]Do you want to install the sddm login manager?[Y/n]:[0m" sddm_ans
+	while true
+	do
+		read -rp "[1;34m[ * ]Do you want to install the sddm login manager?[Y/n]:[0m" sddm_ans
 	if [[ -z ${sddm_ans} || ${sddm_ans} == "y" || ${sddm_ans} == "Y" ]]; then
 		echo -e "${BYellow}[ * ]Installing sddm${End_Colour}"
-		sudo pacman -S sddm
-		echo -e "${BYellow}[ * ]Installing Candy Theme for sddm with ${aur_name}${End_Colour}"
-		"${aur_name}" -S sddm-theme-sugar-candy-git
+		sudo pacman -S sddm --noconfirm --needed
+		echo -e "${BYellow}[ * ]Installing Sugar Candy theme for sddm and Sweet-Cursor theme with ${aur_name}${End_Colour}"
+		"${aur_name}" -S sddm-theme-sugar-candy-git sweet-cursor-theme-git --noconfirm --needed	
 		echo -e "${BYellow}[ * ]Editing the conf file for sddm to change the theme to Sugar-Candy${End_Colour}"
-		sudo sed -i 's/Current=.*/Current=Sugar-Candy/' /usr/lib/sddm/sddm.conf.d/default.conf
+		sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
+		sudo sed -i 's/Current=.*/Current=Sugar-Candy/' /etc/sddm.conf
+		echo -e "${BYellow}[ * ]Editing the conf file for Sugar-Candy to change the time to 12 hours format (AM/PM)${End_Colour}"
+		sudo sed -i 's/HourFormat=.*/HourFormat="h:mm:ss A"/' /usr/share/sddm/themes/Sugar-Candy/theme.conf
+		echo -e "${BYellow}[ * ]Editing the conf file for Sugar-Candy to change the cursor theme to Sweet-Cursors${End_Colour}"
+		sudo sed -i 's/CursorTheme=.*/CursorTheme=Sweet-cursors/' /usr/share/sddm/themes/Sugar-Candy/theme.conf
 		echo -e "${BYellow}[ * ]Starting the sddm service at boot with 'sudo systemctl enable sddm.service'${End_Colour}"
 		sudo systemctl enable sddm.service
 		echo -e "${BYellow}[ * ]Reboot the system with 'sudo systemctl reboot'${End_Colour}"
+		break
 	elif [[ ${sddm_ans} == "n" || ${sddm_ans} == "N" ]]; then
 		echo -e "${BRed}Skipping sddm Installation${End_Colour}"
+		break
 	else
-		echo -e "${BRed}Not a valid option, Skipping sddm Installation${End_Colour}"
+                echo -e "${BRed}Not a valid option, please type [Y/n] then press enter.${End_Colour}"
 	fi
+	done
 
 	# Enabling pulseaudio for user
 	echo -e "${BYellow}[ * ]Enabling pulseaudio at startup${End_Colour}"
@@ -347,6 +386,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	# Adding user to video group
 	echo -e "${BYellow}[ * ]Add user to video group${End_Colour}"
 	sudo usermod -aG video "$USER"
+	sudo usermod -aG audio "$USER"
 
 	# Installation Success
 	echo -e "${BGreen}Installation Successfull, Logout and Login to Qtile!!${End_Colour}"

@@ -1,22 +1,27 @@
 #!/bin/bash
 
-# Author : Ruturajn <nanotiruturaj@gmail.com>
-# Copyright (c) 2022, Ruturaj A. Nanoti, All Rights Reserved
-# This script installs the base Arch system and adds a user
+# ***************************************
+# * Author: 4r6h/Rahat                  *
+# * github: https://www.github.com/4r6h *
+# * forked: Ruturajn/Dotfiles           *
+# ***************************************
+# Copyright (c) 2022, Ruturaj A. Nanoti, Modified by 4r6h/Rahat All Rights Reserved
+# Run this script for setting up the Rice.
 
-echo -ne "
-██████╗ ██╗   ██╗████████╗██╗   ██╗██████╗  █████╗      ██╗███╗   ██╗
-██╔══██╗██║   ██║╚══██╔══╝██║   ██║██╔══██╗██╔══██╗     ██║████╗  ██║
-██████╔╝██║   ██║   ██║   ██║   ██║██████╔╝███████║     ██║██╔██╗ ██║
-██╔══██╗██║   ██║   ██║   ██║   ██║██╔══██╗██╔══██║██   ██║██║╚██╗██║
-██║  ██║╚██████╔╝   ██║   ╚██████╔╝██║  ██║██║  ██║╚█████╔╝██║ ╚████║
-╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═══╝
-=====================================================================
+echo -ne '''
 
-                Arch-Linux Installation Script                       
+ 888888ba            dP                  dP   
+ 88     8b           88                  88   
+ a88aaaa8P .d8888b.  88d888b. .d8888b. d8888P 
+ 88    8b  88    88  88    88 88    88   88   
+ 88     88 88.  .88  88    88 88.  .88   88   
+ dP      dP 88888P8  dP    dP  88888P8   dP   
+================================================
 
-=====================================================================
-"
+        Arch-Linux Qtile Setup Script                       
+
+================================================
+'''
 
 # Defining colours
 BRed="\e[1;31m"
