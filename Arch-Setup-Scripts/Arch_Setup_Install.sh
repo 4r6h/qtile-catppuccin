@@ -10,12 +10,12 @@
 
 echo -ne '''
 
- 888888ba            dP                  dP   
- 88     8b           88                  88   
- a88aaaa8P .d8888b.  88d888b. .d8888b. d8888P 
- 88    8b  88    88  88    88 88    88   88   
- 88     88 88.  .88  88    88 88.  .88   88   
- dP      dP 88888P8  dP    dP  88888P8   dP   
+ 888888ba           dP                  dP   
+ 88     8b          88                  88   
+ a88aaaa8P .d8888b. 88d888b. .d8888b. d8888P 
+ 88    8b  88    88 88    88 88    88   88   
+ 88     88 88.  .88 88    88 88.  .88   88   
+ dP      dP 88888P8 dP    dP  88888P8   dP   
 ================================================
 
         Arch-Linux Qtile Setup Script                       
@@ -260,6 +260,8 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "${BYellow}[ * ]Making ~/.config/picom${End_Colour}"
 	mkdir -p "${HOME}"/.config/picom
 
+	while true
+	do
 	echo -e "${BYellow}[ * ]Choose the option for the compositor:"
 	echo -e "1) picom"
 	echo -e "2) jonaburg-picom"
@@ -274,6 +276,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		cp ../picom/picom.conf "${HOME}"/.config/picom/
+		break
 		;;
 	2)
 		echo -e "${BYellow}[ * ]Installing picom-jonaburg-git with ${aur_name}${End_Colour}"
@@ -281,6 +284,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		cp ../picom/jonaburg_picom.conf "${HOME}"/.config/picom/picom.conf
+		break
 		;;
 	3)
 		echo -e "${BYellow}[ * ]Installing picom-ibhagwan-git with ${aur_name}${End_Colour}"
@@ -288,8 +292,13 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		curl -fsSL "https://raw.githubusercontent.com/ibhagwan/picom/next-rebase/picom.sample.conf" >"${HOME}"/.config/picom/picom.conf
+		break
 		;;
+	*)
+		echo -e "${BRed} please select type an option. then press enter${End_Colour}"
+
 	esac
+	done
 
 	echo -e "${BYellow}[ * ]Changing the picom executable call in autostart.sh${End_Colour}"
 	if [[ $(systemd-detect-virt) ]]; then
@@ -384,7 +393,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	systemctl --user enable pulseaudio
 
 	# Adding user to video group
-	echo -e "${BYellow}[ * ]Add user to video group${End_Colour}"
+	echo -e "${BYellow}[ * ]Add user to video and audio group${End_Colour}"
 	sudo usermod -aG video "$USER"
 	sudo usermod -aG audio "$USER"
 
