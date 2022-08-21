@@ -72,7 +72,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		brightnessctl bc bashtop acpi github-cli wget shfmt lxsession lxappearance \
 		ttf-joypixels yad gnome-disk-utility ripgrep udiskie xclip dex starship \
 		ttf-joypixels python-neovim python2 bat ueberzug ffmpegthumbnailer libjpeg \
-		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance
+		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance 
 
 	while true
 	do
@@ -139,10 +139,18 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "${BYellow}[ * ]Installing some other misc. packages with ${aur_name}${End_Colour}"
 	"${aur_name}" -S lf i3lock-color betterlockscreen tty-clock-git cbonsai --noconfirm --needed
 
-	# Getting pfetch and neofetch as fetch tool
-	echo -e "${BYellow}[ * ]Installing pfetch and neofetch as the fetch tool${End_Colour}"
-	"${aur_name}" -S pfetch neofetch --noconfirm --needed
+	# Getting pfetch as fetch tool
+	echo -e "${BYellow}[ * ]Installing pfetch as the fetch tool${End_Colour}"
+	"${aur_name}" -S pfetch --noconfirm --needed
 	
+	# Getting cursor themes
+	echo -e "${BYellow}[ * ]Installing cursor themes${End_Colour}"
+	"${aur_name}" -S sweet-cursors-theme-git --noconfirm --needed
+	
+	# Getting gtk+ and qt themes
+	echo -e "${BYellow}[ * ]Installing gtk+ themes${End_Colour}"
+	"${aur_name}" -S dracula-gtk-theme ant-dracula-kvantum-theme-git --noconfirm --needed
+
 	# Place all the folders in the $(HOME)/.config directory
 	echo -e "${BYellow}[ * ]Placing dunst folder in ~/.config/dunst and making vol_script executable${End_Colour}"
 	cp -r ../dunst "${HOME}"/.config/
@@ -344,6 +352,26 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "[ * ]Placing betterlockscreen config file in ~/.config${End_Colour}"
 	cp ../betterlockscreenrc "${HOME}"/.config/
 
+	# Enabling pulseaudio for user
+	echo -e "${BYellow}[ * ]Enabling pulseaudio at startup${End_Colour}"
+	systemctl --user enable pulseaudio
+
+	# Adding user to video group
+	echo -e "${BYellow}[ * ]Add user to video and audio group${End_Colour}"
+	sudo usermod -aG video "$USER"
+	sudo usermod -aG audio "$USER"
+
+
+	#sddm_themes_dir
+	sddm_conf="/etc/sddm.conf"
+	sugar_candy="/usr/share/sddm/themes/Sugar-Candy"
+
+	#lightdm_themes_dir
+	lightdm_conf="/etc/lightdm/lightdm.conf"
+	aether="/usr/share/lightdm-webkit/themes/lightdm-webkit-theme-aether"
+	glorious="/usr/share/lightdm-webkit/themes/glorious"
+	slick="/etc/lightdm/slick-greeter.conf"
+
 	# # Enable lightdm service with the following steps
 	# read -rp "[1;34m[ * ]Do you want to install the lightdm login manager?[Y/n]:[0m" lightdm_ans
 	# if [[ -z ${lightdm_ans} || ${lightdm_ans} == "y" || ${lightdm_ans} == "Y" ]] ; then
@@ -360,15 +388,17 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	#     echo -e "${BRed}Not a valid option, Skipping Lightdm Installation${End_Colour}"
 	# fi
 
-	# Install and Enable sddm service with the following steps
-	while true
-	do
-		read -rp "[1;34m[ * ]Do you want to install the sddm login manager?[Y/n]:[0m" sddm_ans
-	if [[ -z ${sddm_ans} || ${sddm_ans} == "y" || ${sddm_ans} == "Y" ]]; then
+	base_sddm() {
 		echo -e "${BYellow}[ * ]Installing sddm${End_Colour}"
 		sudo pacman -S sddm --noconfirm --needed
+	}
+
+	# sddm themes
+
+	sugar_candy() {
+		base_sddm	
 		echo -e "${BYellow}[ * ]Installing Sugar Candy theme for sddm and Sweet-Cursor theme with ${aur_name}${End_Colour}"
-		"${aur_name}" -S sddm-theme-sugar-candy-git sweet-cursor-theme-git --noconfirm --needed	
+		"${aur_name}" -S sddm-theme-sugar-candy-git --noconfirm --needed	
 		echo -e "${BYellow}[ * ]Editing the conf file for sddm to change the theme to Sugar-Candy${End_Colour}"
 		sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
 		sudo sed -i 's/Current=.*/Current=Sugar-Candy/' /etc/sddm.conf
@@ -379,26 +409,129 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		echo -e "${BYellow}[ * ]Starting the sddm service at boot with 'sudo systemctl enable sddm.service'${End_Colour}"
 		sudo systemctl enable sddm.service
 		echo -e "${BYellow}[ * ]Reboot the system with 'sudo systemctl reboot'${End_Colour}"
-		break
-	elif [[ ${sddm_ans} == "n" || ${sddm_ans} == "N" ]]; then
-		echo -e "${BRed}Skipping sddm Installation${End_Colour}"
-		break
-	else
-                echo -e "${BRed}Not a valid option, please type [Y/n] then press enter.${End_Colour}"
-	fi
+	}
+
+	sddm() {
+		# Install and Enable sddm service with the following steps
+		
+		while true 
+		do
+		echo "(0) Back to previous menu"
+		echo "(1) Sugar Candy sddm theme. [Pre Configured and Tested]"
+		read -rp "[1;34m[ * ]What lightdm theme do you want to install:[0m" lm_theme
+		case $lm_theme in
+			(0)
+					break;;
+			(1) sugar_candy
+					break;;	
+			(*) echo -e "${BRed}cannot proceed withouta login manager!!${End_Colour}"
+		esac
+		done
+	}
+
+	base_lightdm() {
+		
+		echo -e "${BYellow}[ * ]Installing lightdm${End_Colour}"
+		sudo pacman -S lightdm --noconfirm --needed
+	}
+
+	# lightdm themes
+		aether() {	
+			base_lightdm
+			echo -e "${BYellow}[ * ]Installing Auther theme for lightdm and Sweet-Cursor theme with ${aur_name}${End_Colour}"
+			"${aur_name}" -S lightdm-webkit-theme-aether --noconfirm --needed
+			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Aether${End_Colour}"
+			sudo sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = lightdm-webkit-theme-aether #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
+			echo -e "${BYellow}[ * ]Starting the lightdm service at boot with 'sudo systemctl enable lightdm.service'${End_Colour}"
+			sudo systemctl enable lightdm.service
+			echo -e "${BYellow}[ * ]Reboot the system with 'sudo systemctl reboot'${End_Colour}"
+		}
+
+		glorious() {
+			base_lightdm
+			echo -e "${BYellow}[ * ]Installing Glorious theme for lightdm theme with ${aur_name}${End_Colour}"
+			"${aur_name}" -S lightdm-webkit2-theme-glorious --noconfirm --needed
+			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Glorious${End_Colour}"
+			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
+			sudo sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = glorious #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+			sudo sed -i 's/^debug_mode\s*=\s*\(.*\)/debug_mode = true #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+			echo -e "${BYellow}[ * ]Starting the lightdm service at boot with 'sudo systemctl enable lightdm.service'${End_Colour}"
+			sudo systemctl enable lightdm.service
+			echo -e "${BYellow}[ * ]Reboot the system with 'sudo systemctl reboot'${End_Colour}"
+		}
+
+		slick() {
+			base_lightdm
+			echo -e "${BYellow}[ * ]Installing Slick-greeter theme for lightdm with ${aur_name}${End_Colour}"
+			"${aur_name}" -S lightdm-slick-greeter --noconfirm --needed
+			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Slick-greeter${End_Colour}"
+			cp ../slick-greeter.conf /etc/lightdm/ 
+			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-slick-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
+			echo -e "${BYellow}[ * ]Starting the lightdm service at boot with 'sudo systemctl enable lightdm.service'${End_Colour}"
+			sudo systemctl enable lightdm.service
+			echo -e "${BYellow}[ * ]Reboot the system with 'sudo systemctl reboot'${End_Colour}"
+		}
+
+	lightdm() {
+		# Install and Enable lightdm service with the following steps	
+	
+		while true 
+		do
+		echo "(0) Back to previous menu"
+		echo "(1) Aether lightdm webkit theme. [Not Tested]"
+		echo "(2) Glorious lightdm webkit2 theme. [Not Tested]"
+		echo "(3) Slick lightdm gtk theme. [Not Tested]"
+		read -rp "[1;34m[ * ]What lightdm theme do you want to install:[0m" lm_theme
+		case $lm_theme in
+			(0)
+					break;;
+			(1) aether
+					break;;
+			(2) glorious
+					break;;
+			(3) slick
+					break;;
+			(*) echo -e "${BRed}cannot proceed withouta login manager!!${End_Colour}"
+		esac
+		done
+	}
+	while true
+	do
+		echo "(1) Sddm already configured only 1 theme. [Default]"
+		echo "(2) Lightdm not configured and chose a theme from"
+		echo "    3 defferent themes. [Not Tested]"
+		read -rp "[1;34m[ * ]What login manager do you want to install:[0m" lm_ans
+		case $lm_ans in
+			(1) sddm
+			if [[ -d $sugar_candy && -e $sddm_conf ]]; then
+				break
+			else
+				echo -e "\n${BRed}cannot proceed without a login manager!!${End_Colour}\n"
+				continue
+			
+			fi
+				;;
+			(2) lightdm
+				if [[ -d $aether || $glorious || $slick && -e $lightdm_conf ]]; then
+					break
+				else
+					echo -e "\n${BRed}cannot proceed without a login manager!!${End_Colour}\n"
+					continue	
+				fi
+	
+					;;
+			(*) echo -e "\n${BRed}cannot proceed without a login manager!!${End_Colour}\n"
+		esac
 	done
-
-	# Enabling pulseaudio for user
-	echo -e "${BYellow}[ * ]Enabling pulseaudio at startup${End_Colour}"
-	systemctl --user enable pulseaudio
-
-	# Adding user to video group
-	echo -e "${BYellow}[ * ]Add user to video and audio group${End_Colour}"
-	sudo usermod -aG video "$USER"
-	sudo usermod -aG audio "$USER"
-
 	# Installation Success
-	echo -e "${BGreen}Installation Successfull, Logout and Login to Qtile!!${End_Colour}"
+	echo -e "${BGreen}Installation Successfull,${End_Colour}"
+	echo -e "${BGreen}press enter to reboot your system.${End_Colour}"
+	read input
+	case $input in
+		(*) sudo systemctl reboot;;
+	esac
+
 else
 	echo -e "${BRed}[ * ]Skipping Rice Setup${End_Colour}"
 	exit

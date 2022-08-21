@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Author : Ruturajn <nanotiruturaj@gmail.com>
+# Author : Modified by 4r6h/Rahat
 
 # This script changes the colorscheme using pywal and wpgtk
 # globally.
@@ -9,7 +9,7 @@
 set -eou pipefail
 
 # Define the PATH where the Wallpapers are located.
-WALLPAPER_PATH="/home/$(whoami)/Git-Repos/Dotfiles/Wallpapers/"
+WALLPAPER_PATH="/usr/share/backgrounds/qtile-wallpapers"
 
 # Get a list of wallpapers, from the WALLPAPER_PATH, and add a picutre glyph at the
 # beginning of the line. Finally, pass the list to rofi.

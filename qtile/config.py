@@ -66,7 +66,7 @@ def start_dex():
 
 groups = [
     Group("1", label=fa.icons["terminal"]),
-    Group("2", label=fa.icons["firefox"]),
+    Group("2", label=fa.icons["chrome"]),
     Group("3", label=fa.icons["code"]),
     Group("4", label=fa.icons["folder"]),
     Group("5", label=fa.icons["github"]),
@@ -122,7 +122,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="JetBrains Mono",
+    font="JetBrains Mono Nerd Font",
     fontsize=16,
     padding=5,
 )

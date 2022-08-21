@@ -65,7 +65,7 @@ def show_power_menu(qtile):
         ),
         PopupText(
             text="Log Out",
-            font="JetBrains Mono",
+            font="JetBrains Mono Nerd Font",
             fontsize=15,
             pos_x=0.085,
             pos_y=0.7,
@@ -75,7 +75,7 @@ def show_power_menu(qtile):
         ),
         PopupText(
             text="Shutdown",
-            font="JetBrains Mono",
+            font="JetBrains Mono Nerd Font",
             fontsize=15,
             pos_x=0.4,
             pos_y=0.7,
@@ -85,7 +85,7 @@ def show_power_menu(qtile):
         ),
         PopupText(
             text="Reboot",
-            font="JetBrains Mono",
+            font="JetBrains Mono Nerd Font",
             fontsize=15,
             pos_x=0.7,
             pos_y=0.7,
@@ -133,7 +133,7 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key(["control", "shift"], "l", lazy.spawn(
+    Key([mod], "r", lazy.spawn(
         "rofi -show drun"), desc="Launch Rofi"),
     Key([mod, "control"], "s", lazy.spawn(
         "flameshot gui"), desc="Lauch Flameshot GUI"),
@@ -150,7 +150,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "x", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     # Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod, "control"], "q", lazy.spawn(os.path.expanduser("~/.config/qtile/Scripts/power_menu")), desc="Rofi Powermenu"),
@@ -162,7 +162,7 @@ keys = [
     Key([], "XF86AudioMute", lazy.spawn(
         os.path.expanduser("~/.config/qtile/Scripts/vol_script toggle")), desc="Mute System Volume"),
     Key([mod], "b", lazy.spawn(browser), desc="Launch Brave"),
-    Key([mod], "f", lazy.spawn(file_manager), desc="Launch File Manager Nemo"),
+    Key([mod], "f", lazy.spawn(file_manager), desc="Launch File Manager pcmanfm"),
     Key(["mod1"], "t", lazy.spawn(os.path.expanduser(
         "~/.config/qtile/Scripts/cpu_temp")), desc="Display CPU Core Temperature"),
     Key(["mod1"], "f", lazy.spawn(os.path.expanduser(
