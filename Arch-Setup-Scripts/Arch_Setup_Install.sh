@@ -8,8 +8,13 @@
 # Copyright (c) 2022, Ruturaj A. Nanoti, Modified by 4r6h/Rahat All Rights Reserved
 # Run this script for setting up the Rice.
 
-echo -ne '''
+BRed="\e[1;31m"
+BGreen="\e[1;32m"
+BYellow="\e[1;33m"
+BBlue="\e[1;34m"
+End_Colour="\e[0m"
 
+echo -ne "\e[34m
  888888ba           dP                  dP   
  88     8b          88                  88   
  a88aaaa8P .d8888b. 88d888b. .d8888b. d8888P 
@@ -21,13 +26,8 @@ echo -ne '''
         Arch-Linux Qtile Setup Script                       
 
 ================================================
-'''
-
-BRed="\e[1;31m"
-BGreen="\e[1;32m"
-BYellow="\e[1;33m"
-# BBlue="\e[1;34m"
-End_Colour="\e[0m"
+\e[0m
+"
 
 echo -e "${BRed}==========================================================================================================================${End_Colour}"
 echo -e "${BRed}[ * ]!This script is going to backup your current .config folder and any vim related files that you mave have in the
