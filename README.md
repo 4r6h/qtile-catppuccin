@@ -87,7 +87,7 @@ Check the links from the **Theme** section, in the [Setup Details](#setup-detail
 | Shell    | [Fish](https://github.com/fish-shell/fish-shell) (with [Oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)) |
 | Compositor | [Jonaburg's Fork of picom](https://github.com/jonaburg/picom) |
 | Application Launcher | [Rofi](https://github.com/davatorium/rofi) | 
-| Text Editor | [Vim](https://github.com/vim/vim) [Neovim](https://github.com/neovim/neovim) or Both|
+| Text Editor | [Vim](https://github.com/vim/vim), [Neovim](https://github.com/neovim/neovim) or Both|
 | Browser | [Brave](https://brave.com/) |
 | Notifications | [Dunst](https://github.com/dunst-project/dunst) |
 | File Manager | [PCManFM](https://github.com/lxde/pcmanfm) |
