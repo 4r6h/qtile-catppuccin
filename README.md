@@ -87,10 +87,10 @@ Check the links from the **Theme** section, in the [Setup Details](#setup-detail
 | Shell    | [Fish](https://github.com/fish-shell/fish-shell) (with [Oh-my-fish](https://github.com/oh-my-fish/oh-my-fish)) |
 | Compositor | [Jonaburg's Fork of picom](https://github.com/jonaburg/picom) |
 | Application Launcher | [Rofi](https://github.com/davatorium/rofi) | 
-| Text Editor | [Vim](https://github.com/vim/vim) or [Neovim](https://github.com/neovim/neovim) |
+| Text Editor | [Vim](https://github.com/vim/vim) [Neovim](https://github.com/neovim/neovim) or Both|
 | Browser | [Brave](https://brave.com/) |
 | Notifications | [Dunst](https://github.com/dunst-project/dunst) |
-| File Manager | [Nemo](https://github.com/linuxmint/nemo) |
+| File Manager | [PCManFM](https://github.com/lxde/pcmanfm) |
 | Fonts | [Fantasque Sans Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FantasqueSansMono/Regular/complete), [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete), [Fontawesome Font](https://github.com/FortAwesome/Font-Awesome) and [Material Design Icon Font](https://github.com/google/material-design-icons/blob/master/font/MaterialIcons-Regular.ttf) |
 | Fetch Program | [pfetch](https://github.com/dylanaraps/pfetch), [fm6000](https://github.com/anhsirk0/fetch-master-6000) and [nerdfetch](https://github.com/ThatOneCalculator/NerdFetch) |
 | Terminal Programs | [cava](https://github.com/karlstav/cava), [bashtop](https://github.com/aristocratos/bashtop), [pipes.sh](https://github.com/pipeseroni/pipes.sh), [cmatrix](https://github.com/abishekvashok/cmatrix) and [cbonsai](https://gitlab.com/jallbrit/cbonsai) |
