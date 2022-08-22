@@ -17,7 +17,7 @@ Important things to follow for the Setup on Virtual Box :
   emulator will need to be installed.
 - Check the ```Enable EFI(special OSes only)``` checkbox under the ```System``` tab in *VM Settings*.
 - Approximately ```20-25GB``` storage is recommended.
-- **For the Keybindings see [this](https://github.com/Ruturajn/Dotfiles/blob/main/qtile/Commands.txt).**
+- **For the Keybindings see [this](https://github.com/4r6h/qtile-catppuccin/blob/main/qtile/Commands.txt).**
 
 Run the Arch Setup Script with the commands :
 

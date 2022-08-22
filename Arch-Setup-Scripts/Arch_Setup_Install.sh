@@ -513,7 +513,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 			fi
 				;;
 			(2) lightdm
-				if [[ -d $aether || $glorious || $slick && -e $lightdm_conf ]]; then
+				if [[ -d $aether || -d $glorious || -d $slick && -e $lightdm_conf ]]; then
 					break
 				else
 					echo -e "\n${BRed}cannot proceed without a login manager!!${End_Colour}\n"
