@@ -1,4 +1,4 @@
-# Dotfiles
+# qtile-catppuccin
 
 ***Now, a custom Arch-Based Distro/ISO is available for this Rice @ https://gitlab.com/ruturajn/RnOS_ISO. Do check it out.***
 
@@ -7,12 +7,12 @@ and for a base Arch-Linux Install respectively, present in the `Arch-Setup-Scrip
 which you can find in the `ubuntu` branch.
 
 To use the config on Arch, you will need to do a few things apart from installing the required packages (If you are not using one of the setup scripts):
-- Edit line `202` in the [dunstrc](https://github.com/Ruturajn/Dotfiles/blob/main/dunst/dunstrc) to add the path to dunst icons, which should be
+- Edit line `202` in the [dunstrc](https://github.com/4r6h/qtile-catppuccin/blob/main/dunst/dunstrc) to add the path to dunst icons, which should be
   `~/.config/dunst/icons`, or if you have not moved the `dunst` folder to your `~/.config` directory `<Path_to_these_dotfiles>/dunst/icons`.
-- Edit line `6` in the [autostart.sh](https://github.com/Ruturajn/Dotfiles/blob/main/qtile/autostart.sh) script to add the path to your wallpaper. 
+- Edit line `6` in the [autostart.sh](https://github.com/4r6h/qtile-catppuccin/blob/main/qtile/autostart.sh) script to add the path to your wallpaper. 
   This can be skipped if you want to use nitrogen, to set your wallaper. To do that, you will need to set a wallpaper the first time you login to Qtile
   with `nitrogen`. This is only a one time thing, and the wallpaper you chose will persist, due to line `9` in the 
-  [autostart.sh](https://github.com/Ruturajn/Dotfiles/blob/main/qtile/autostart.sh) script. Also, you will need to make the autostart script executable,
+  [autostart.sh](https://github.com/4r6h/qtile-catppuccin/blob/main/qtile/autostart.sh) script. Also, you will need to make the autostart script executable,
   with `chmod +x <Path-to-autostart.sh>/autostart.sh`.
 - Get the required fonts, i.e. [Material Icons Font](https://github.com/google/material-design-icons/raw/master/font/MaterialIcons-Regular.ttf), 
   [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete/JetBrains%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.ttf), and finally copy all fonts along
@@ -36,7 +36,7 @@ To use the config on Arch, you will need to do a few things apart from installin
   $ source "${HOME}"/.vimrc
   $ vim +'PlugInstall --sync' +qa
   ```
-  Please, see the `echo` commands, on lines `158` to `211` in [Arch_Setup_Install.sh](https://github.com/Ruturajn/Dotfiles/blob/main/Arch-Setup-Scripts/Arch_Setup_Install.sh) as explanation on what these lines do, for neovim and vim setup respectively, if you are unfamiliar with them.
+  Please, see the `echo` commands, on lines `158` to `211` in [Arch_Setup_Install.sh](https://github.com/4r6h/qtile-catppuccin/blob/main/Arch-Setup-Scripts/Arch_Setup_Install.sh) as explanation on what these lines do, for neovim and vim setup respectively, if you are unfamiliar with them.
 - (Optional) Using `wpgtk` and `pywal`. The modifications, required to use them are present in the `qtile config`, and the `wal-set` script is 
   placed under `qtile/Scripts` directory. To use it with my dotfiles, follow these steps:
   ```
@@ -61,16 +61,16 @@ To use the config on Arch, you will need to do a few things apart from installin
 *Note:* 
 - *The Setup Install Script places the config files in their respective directories and installs the dependencies. Please read the ```README.md``` file placed
 under the `Arch-Setup-Scripts` directory and the script ,before running the script. You can just get the script using curl (see 
-[Arch-Setup-Scripts/README.md](https://github.com/Ruturajn/Dotfiles/tree/main/Arch-Setup-Scripts)), it will clone this repo and do the needfull.*
-- *The Arch Install Script adds a user, partitions the disk, does a base Arch Installation etc. (see [Arch-Setup-Scripts/README.md](https://github.com/Ruturajn/Dotfiles/tree/main/Arch-Setup-Scripts)).*
+[Arch-Setup-Scripts/README.md](https://github.com/4r6h/qtile-catppuccin/tree/main/Arch-Setup-Scripts)), it will clone this repo and do the needfull.*
+- *The Arch Install Script adds a user, partitions the disk, does a base Arch Installation etc. (see [Arch-Setup-Scripts/README.md](https://github.com/4r6h/qtile-catppuccin/tree/main/Arch-Setup-Scripts)).*
 - *The `picom.conf` file here, is to be used with the original picom. For [Jonaburg's Fork of picom](https://github.com/jonaburg/picom),
   I use `jonaburg_picom.conf`. If you want to use jonaburg-picom use that.*
-- If you don't see the `wifi` widget show up, change line `364` in [qtile/config.py](https://github.com/Ruturajn/Dotfiles/blob/main/qtile/config.py)
+- If you don't see the `wifi` widget show up, change line `364` in [qtile/config.py](https://github.com/4r6h/qtile-catppuccin/blob/main/qtile/config.py)
   to your network interface.
-- *To use the [bright_control](https://github.com/Ruturajn/Dotfiles/blob/main/qtile/bright_control) script, the user will need to be a part of the 
+- *To use the [bright_control](https://github.com/4r6h/qtile-catppuccin/blob/main/qtile/bright_control) script, the user will need to be a part of the 
   `video` group. This can be done by : `$ sudo usermod -aG video $USER`.*
 
-If you are using the [Arch_Setup_Install.sh](https://github.com/Ruturajn/Dotfiles/blob/main/Arch-Setup-Scripts/Arch_Setup_Install.sh) script all of 
+If you are using the [Arch_Setup_Install.sh](https://github.com/4r6h/qtile-catppuccin/blob/main/Arch-Setup-Scripts/Arch_Setup_Install.sh) script all of 
 these things mentioned about editing files, picom configs (It will also ask you which fork of picom you require and place the default config
 from that fork in `~/.config/picom/picom.conf`), adding your user to the groups and giving you the choice to choose `pywal` with `wpgtk` will
 be taken care of by the script. It will also backup your `$HOME/.config` directory before making any changes, so you will not loose any data.
