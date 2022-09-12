@@ -72,7 +72,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		brightnessctl bc bashtop acpi github-cli wget shfmt lxsession lxappearance \
 		ttf-joypixels yad gnome-disk-utility ripgrep udiskie xclip dex starship \
 		ttf-joypixels python-neovim python2 bat ueberzug ffmpegthumbnailer libjpeg \
-		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance 
+		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance vifm 
 
 	while true
 	do
