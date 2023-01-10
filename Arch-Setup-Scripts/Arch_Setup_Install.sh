@@ -70,7 +70,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		papirus-icon-theme cmatrix pamixer feh alsa-utils pavucontrol alacritty \
 		git vim curl flameshot pulseaudio playerctl scrot ttf-fantasque-sans-mono \
 		brightnessctl bc bashtop acpi github-cli wget shfmt lxsession lxappearance \
-		ttf-joypixels yad gnome-disk-utility ripgrep udiskie xclip dex starship \
+		yad gnome-disk-utility ripgrep udiskie xclip dex starship \
 		ttf-joypixels python-neovim python2 bat ueberzug ffmpegthumbnailer libjpeg \
 		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance vifm 
 
