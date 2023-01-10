@@ -113,7 +113,6 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	elif [[ -z ${aur_ans} || ${aur_ans} == "y" || ${aur_ans} == "Y" ]]; then
 		echo -e "${BYellow}[ * ]Installing paru as the AUR Helper${End_Colour}"
 		git clone https://aur.archlinux.org/paru.git
-		sudo chown -R "${USER}":"${USER}" paru
 		cd ./paru || exit
 		makepkg -si 
 	fi
