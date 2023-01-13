@@ -235,7 +235,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	viminstall() {
 		echo -e "${BYellow}[ * ]Installing Vim${End_Colour}"
 		echo -e "${BYellow}[ * ]Placing .vimrc in ~/${End_Colour}"
-		cp ./.vimrc "${HOME}"/
+		cp ../.vimrc "${HOME}"/
 
 		echo -e "${BYellow}[ *]Making ~/.vim/plugged directory"
 		mkdir -p "${HOME}"/.vim/plugged
@@ -263,7 +263,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		sudo pacman -S neovim --no-confirm --needed
 
 		echo -e "${BYellow}[ * ]Placing nvim directory in ~/.config${End_Colour}"
-		cp -r nvim ~/.config
+		cp -r ../nvim ~/.config
 
 		# Install nodejs
 		echo -e "${BYellow}[ * ]Installing Latest Nodejs${End_Colour}"
