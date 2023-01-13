@@ -131,7 +131,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	'vifm'
 	)
 	for pkg in "${pkgs[@]}";	do
-		sudo pacman -Syu $pkg --noconfirm --needed
+		sudo pacman -S $pkg --noconfirm --needed
 					done
 	while true
 	do
