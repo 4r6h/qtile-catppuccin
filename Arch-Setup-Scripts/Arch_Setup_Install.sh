@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ***************************************
 # * Author: 4r6h/Rahat                  *
