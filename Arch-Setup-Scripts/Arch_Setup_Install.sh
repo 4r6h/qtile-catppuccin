@@ -65,15 +65,74 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 	# Install the required packages for the Rice
 	echo -e "${BYellow}[ * ]Installing packages${End_Colour}"
-	sudo pacman -Syyu neofetch htop nitrogen xorg fish rofi dunst dialog \
-		python-dbus linux-headers base base-devel p7zip unzip tar python-pip \
-		papirus-icon-theme cmatrix pamixer feh alsa-utils pavucontrol alacritty \
-		git vim curl flameshot pulseaudio playerctl scrot ttf-fantasque-sans-mono \
-		brightnessctl bc bashtop acpi github-cli wget shfmt lxsession lxappearance \
-		yad gnome-disk-utility ripgrep udiskie xclip dex starship \
-		ttf-joypixels python-neovim python2 bat ueberzug ffmpegthumbnailer libjpeg \
-		libpng ncdu tree xsel fd pcmanfm kvantum lxappearance vifm 
-
+	pkgs=(
+	'neofetch' 
+	'htop'
+	'nitrogen'
+	'xorg'
+	'fish'
+	'rofi'
+	'dunst'
+	'dialog'
+	'python-dbus'
+	'linux-headers'
+	'base'
+	'base-devel'
+	'p7zip'
+	'unzip'
+	'tar'
+	'python-pip'
+	'papirus-icon-theme'
+	'cmatrix'
+	'pamixer'
+	'feh'
+	'alsa-utils'
+	'pavucontrol'
+	'alacritty'
+	'git'
+	'vim'
+	'curl'
+	'flameshot'
+	'pulseaudio'
+	'playerctl'
+	'scrot'
+	'ttf-fantasque-sans-mono'
+	'brightnessctl'
+	'bc'
+	'bashtop'
+	'acpi'
+	'github-cli'
+	'wget'
+	'shfmt'
+	'lxsession'
+	'lxappearance'
+	'yad'
+	'gnome-disk-utility'
+	'ripgrep'
+	'udiskie'
+	'xclip'
+	'dex'
+	'starship'
+	'ttf-joypixels'
+	'python-neovim'
+	'python'
+	'bat'
+	'ueberzug'
+	'ffmpegthumbnailer'
+	'libjpeg'
+	'libpng'
+	'ncdu'
+	'tree'
+	'xsel'
+	'fd'
+	'pcmanfm'
+	'kvantum'
+	'lxappearance'
+	'vifm'
+	)
+	for pkg in "${pkgs[@]}";	do
+		sudo pacman -Syu $pkg --noconfirm --needed
+					done
 	while true
 	do
 	# Adding a swapfile
@@ -98,12 +157,12 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	# Install stuff with pip
 	# echo -e "${BYellow}[ * ]Installing fontawesome and dbus-next for icons and notifications${End_Colour}"
 	echo -e "${BYellow}[ * ]Installing fontawesome${End_Colour}"
-	sudo pacman -S  python-pip
+	sudo pacman -S python-pip --no-confirm --needed
 	sudo pip3 install fontawesome
 
 	# Install `paru` as the AUR Helper, interact wherever required
 	aur_name="paru"
-	if [[ ! -x /usr/bin/${aur_name} || ! -x /bin/${aur_name} ]]; then
+	if [[ ! -x /usr/bin/${aur_name} ]]; then
 	read -rp "[1;34m[ * ]Do you want to install paru as the AUR Helper? [Y/n]:[0m" aur_ans
 	if [[ ${aur_ans} == "n" || ${aur_ans} == "N" ]]; then
 		read -rp "[1;34m[ * ]Please enter the name of the already installed AUR Helper:[0m" aur_name
