@@ -179,35 +179,35 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 	# Upgrade system with paru
 	echo -e "${BYellow}[ * ]Updating and Upgrading system with ${aur_name}${End_Colour}"
-	"${aur_name}" -Syu
+	"${aur_name}" -Syu --no-confirm --needed
 
 	# Install lsd for the ls command and qtile-extras from desired AUR Helper
 	echo -e "${BYellow}[ * ]Installing lsd, qtile-git, and qtile-extras with ${aur_name}${End_Colour}"
-	"${aur_name}" -S lsd qtile-git qtile-extras-git
+	"${aur_name}" -S lsd qtile-git qtile-extras-git --no-confirm --needed
 
 	# Install the required fonts
 	echo -e "${BYellow}[ * ]Installing Nerd Fonts Complete with ${aur_name}${End_Colour}"
-	"${aur_name}" -S nerd-fonts-complete
+	"${aur_name}" -S nerd-fonts-complete --no-confirm --needed
 
 	# Install pipes,cava, and brave-bin with paru
 	echo -e "${BYellow}[ * ]Installing pipes.sh, cava, brave-bin and wpgtk with ${aur_name}${End_Colour}"
-	"${aur_name}" -S pipes.sh cava brave-bin wpgtk
+	"${aur_name}" -S pipes.sh cava brave-bin wpgtk --no-confirm --needed
 
 	# Install some other packages with paru
 	echo -e "${BYellow}[ * ]Installing some other misc. packages with ${aur_name}${End_Colour}"
-	"${aur_name}" -S lf i3lock-color betterlockscreen tty-clock-git cbonsai
+	"${aur_name}" -S lf i3lock-color betterlockscreen tty-clock-git cbonsai --no-confirm --needed
 
 	# Getting pfetch as fetch tool
 	echo -e "${BYellow}[ * ]Installing pfetch as the fetch tool${End_Colour}"
-	"${aur_name}" -S pfetch
+	"${aur_name}" -S pfetch --no-confirm --needed
 	
 	# Getting cursor themes
 	echo -e "${BYellow}[ * ]Installing cursor themes${End_Colour}"
-	"${aur_name}" -S sweet-cursors-theme-git
+	"${aur_name}" -S sweet-cursors-theme-git --no-confirm --needed
 	
 	# Getting gtk+ and qt themes
 	echo -e "${BYellow}[ * ]Installing gtk+ themes${End_Colour}"
-	"${aur_name}" -S dracula-gtk-theme ant-dracula-kvantum-theme-git
+	"${aur_name}" -S dracula-gtk-theme ant-dracula-kvantum-theme-git --no-confirm --needed
 
 	# Place all the folders in the $(HOME)/.config directory
 	echo -e "${BYellow}[ * ]Placing dunst folder in ~/.config/dunst and making vol_script executable${End_Colour}"
@@ -260,14 +260,14 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 		# Check if neovim is installed, if it is remove it and install latest
 		echo -e "${BYellow}[ * ]Installing Latest Neovim${End_Colour}"
-		sudo pacman -S neovim
+		sudo pacman -S neovim --no-confirm --needed
 
 		echo -e "${BYellow}[ * ]Placing nvim directory in ~/.config${End_Colour}"
 		cp -r nvim ~/.config
 
 		# Install nodejs
 		echo -e "${BYellow}[ * ]Installing Latest Nodejs${End_Colour}"
-		sudo pacman -S npm nodejs
+		sudo pacman -S npm nodejs --no-confirm --needed
 		
 		# Make a plugged directory in ~/.config/nvim/
 		echo -e "${BYellow}[ * ]Making directory ~/.config/nvim/plugged${End_Colour}"
@@ -338,7 +338,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	case "${picom_ans}" in
 	1)
 		echo -e "${BYellow}[ * ]Installing picom${End_Colour}"
-		sudo pacman -S picom 
+		sudo pacman -S picom --no-confirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		cp ../picom/picom.conf "${HOME}"/.config/picom/
@@ -346,7 +346,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		;;
 	2)
 		echo -e "${BYellow}[ * ]Installing picom-jonaburg-git with ${aur_name}${End_Colour}"
-		"${aur_name}" -S picom-jonaburg-git 
+		"${aur_name}" -S picom-jonaburg-git --no-confirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		cp ../picom/jonaburg_picom.conf "${HOME}"/.config/picom/picom.conf
@@ -354,7 +354,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		;;
 	3)
 		echo -e "${BYellow}[ * ]Installing picom-ibhagwan-git with ${aur_name}${End_Colour}"
-		"${aur_name}" -S picom-ibhagwan-git 
+		"${aur_name}" -S picom-ibhagwan-git --no-confirm --needed
 
 		echo -e "${BYellow}[ * ]Placing picom config in ~/.config/picom${End_Colour}"
 		curl -fsSL "https://raw.githubusercontent.com/ibhagwan/picom/next-rebase/picom.sample.conf" >"${HOME}"/.config/picom/picom.conf
@@ -373,9 +373,9 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 	# Installing material design icon font
 	echo -e "${BYellow}[ * ]Installing Material-Design-Icon Font${End_Colour}"
-	wget -cqP "${HOME}"/.fonts "https://github.com/4r6h/material-design-icons/raw/master/font/MaterialIcons-Regular.ttf"
-	sudo mv ../Feather.ttf /usr/share/fonts
-	sudo mv ../MaterialIcons-Regular.ttf /usr/share/fonts
+	wget -cqP "https://github.com/4r6h/material-design-icons/raw/master/font/MaterialIcons-Regular.ttf"
+	sudo mv *.ttf /usr/share/fonts
+	sudo mv ../*.ttf /usr/share/fonts
 	fc-cache -fv
 
 	# echo -e "${BYellow}[ *]Installing JetBrains Mono Nerd Font${End_Colour}"
@@ -457,7 +457,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	sugar_candy() {
 		base_sddm	
 		echo -e "${BYellow}[ * ]Installing Sugar Candy theme for sddm and Sweet-Cursor theme with ${aur_name}${End_Colour}"
-		"${aur_name}" -S sddm-theme-sugar-candy-git
+		"${aur_name}" -S sddm-theme-sugar-candy-git --no-confirm --needed
 		echo -e "${BYellow}[ * ]Editing the conf file for sddm to change the theme to Sugar-Candy${End_Colour}"
 		sudo cp /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf
 		sudo sed -i 's/Current=.*/Current=Sugar-Candy/' /etc/sddm.conf
@@ -498,7 +498,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		aether() {	
 			base_lightdm
 			echo -e "${BYellow}[ * ]Installing Auther theme for lightdm and Sweet-Cursor theme with ${aur_name}${End_Colour}"
-			"${aur_name}" -S lightdm-webkit-theme-aether
+			"${aur_name}" -S lightdm-webkit-theme-aether --no-confirm --needed
 			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Aether${End_Colour}"
 			sudo sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = lightdm-webkit-theme-aether #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
 			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
@@ -510,7 +510,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		glorious() {
 			base_lightdm
 			echo -e "${BYellow}[ * ]Installing Glorious theme for lightdm theme with ${aur_name}${End_Colour}"
-			"${aur_name}" -S lightdm-webkit2-theme-glorious
+			"${aur_name}" -S lightdm-webkit2-theme-glorious --no-confirm --needed
 			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Glorious${End_Colour}"
 			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
 			sudo sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = glorious #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
@@ -523,7 +523,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 		slick() {
 			base_lightdm
 			echo -e "${BYellow}[ * ]Installing Slick-greeter theme for lightdm with ${aur_name}${End_Colour}"
-			"${aur_name}" -S lightdm-slick-greeter
+			"${aur_name}" -S lightdm-slick-greeter --no-confirm --needed
 			echo -e "${BYellow}[ * ]Editing the conf file for lightdm to change the theme to Slick-greeter${End_Colour}"
 			cp ../slick-greeter.conf /etc/lightdm/ 
 			sudo sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-slick-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
