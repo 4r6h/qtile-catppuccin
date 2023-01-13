@@ -223,7 +223,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	echo -e "${BYellow}[ * ]Placing qtile/config.py and qtile/autostart.sh folder in ~/.config/qtile  and making autostart.sh executable${End_Colour}"
 	cp -r ../qtile "${HOME}"/.config/
 	sudo mv ../qtile-wallpapers /usr/share/backgrounds/
-	echo "nitrogen --set-zoom-fill /usr/share/backgrounds/qtile-wallpapers/China_Town.jpg --save" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
+	echo "nitrogen --set-zoom-fill /usr/share/backgrounds/China_Town.jpg --save" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
 	echo "~/.config/qtile/Scripts/get_ip.sh &" | sudo tee -a "${HOME}"/.config/qtile/autostart.sh
 	chmod +x "${HOME}"/.config/qtile/autostart.sh
 
