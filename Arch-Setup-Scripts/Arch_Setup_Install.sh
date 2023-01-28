@@ -162,7 +162,7 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 
 	# Install `paru` as the AUR Helper, interact wherever required
 	aur_name="paru"
-	if [[ ! -x /usr/bin/${aur_name} ]]; then
+	if [[ -z $(which ${aur_name}) ]]; then
 	read -rp "[1;34m[ * ]Do you want to install paru as the AUR Helper? [Y/n]:[0m" aur_ans
 	if [[ ${aur_ans} == "n" || ${aur_ans} == "N" ]]; then
 		read -rp "[1;34m[ * ]Please enter the name of the already installed AUR Helper:[0m" aur_name
