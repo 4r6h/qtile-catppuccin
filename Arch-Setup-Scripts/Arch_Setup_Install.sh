@@ -232,6 +232,9 @@ if [[ -z ${setup_ans} || ${setup_ans} == "y" || ${setup_ans} == "Y" ]]; then
 	curl -fsSL "https://raw.githubusercontent.com/4r6h/Dot4iles/main/AlacrittyConfig/alacritty.yml" >"${HOME}"/.config/alacritty/alacritty.yml
 	curl -fsSL "https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin.yml" >"${HOME}"/.config/alacritty/catppuccin.yml
 
+	echo -e "${BYellow}[ * ]Placing vifm folder in ~/.config/vifm${End_Colour}"
+	cp -r ../vifm "${HOME}"/.config/
+
 	viminstall() {
 		echo -e "${BYellow}[ * ]Installing Vim${End_Colour}"
 		echo -e "${BYellow}[ * ]Placing .vimrc in ~/${End_Colour}"
